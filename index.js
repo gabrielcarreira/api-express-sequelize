@@ -14,7 +14,13 @@ app.use(
 
 app.get('/client/:id', async (request, response) => {
   const client = await searchClient(request.params.id)
-  response.json(client)
+  return response.json(client)
+})
+
+app.post('/client', async (request, response) => {
+  const { first_name, last_name, email } = request.body
+  const client = await newClient(first_name, last_name, email)
+  return response.json(client)
 })
 
 app.listen('3000', () => {
