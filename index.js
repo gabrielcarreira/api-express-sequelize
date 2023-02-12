@@ -34,7 +34,7 @@ app.get('/client/:id', async (request, response) => {
 })
 
 app.post('/client', async (request, response) => {
-  const result = joi.validate(request.body, clientSchema)
+  const result = clientSchema.validate(request.body)
   if (result.error) {
     return response.status(400).json({ error: result.error.message })
   }
