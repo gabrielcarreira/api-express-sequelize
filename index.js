@@ -1,6 +1,6 @@
 import express, { response } from 'express'
 import bodyParser from 'body-parser'
-import { searchClient, createClient } from './models/dbFunctions.js'
+import { searchClient, createClient, searchClientsByName } from './models/dbFunctions.js'
 import helmet from 'helmet'
 import cors from 'cors'
 import joi from 'joi'
@@ -35,6 +35,15 @@ app.get('/client/:id', async (request, response) => {
   return response.json(client)
 })
 
+app.get('/client/name/:first_name', async (request, response) => {
+  const first_name = request.params.first_name
+
+  const clients = await searchClientsByName(first_name)
+  if (clients.length === 0)
+    return response.status(404).json({ error: 'Nenhum cliente encontrado' })
+  return response.json(clients)
+})
+
 app.post('/client', async (request, response) => {
   const result = clientSchema.validate(request.body)
   if (result.error) {
@@ -46,6 +55,6 @@ app.post('/client', async (request, response) => {
   return response.json(client)
 })
 
-app.listen('3000', () => {
+app.listen('8080', () => {
   console.log('API On-line')
 })
