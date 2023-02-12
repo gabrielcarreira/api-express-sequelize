@@ -10,6 +10,7 @@ Este repositório fornece um exemplo simples de uma API construída com Express 
 * **Dotenv:** Biblioteca para lidar com variáveis de ambiente
 * **Nodemon:** Restart automático a cada alteração em aplicativos Node.js
 * **Helmet:** Proteger aplicativos Express, definindo vários cabeçalhos HTTP
+* **CORS:** Permitir acesso a recursos de outros origens
 * **Joi:** Validador de dados a partir da descrição do esquema
 
 Para testar a API, basta clonar o repositório e executar o comando ```npm run start``` no terminal ou ```npm run dev``` em ambiente de desenvolvimento. A API estará disponível em http://localhost:3000.
