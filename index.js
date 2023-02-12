@@ -22,7 +22,14 @@ const clientSchema = joi.object().keys({
 })
 
 app.get('/client/:id', async (request, response) => {
-  const client = await searchClient(request.params.id)
+  const id = request.params.id
+
+  if (!Number.isInteger(parseInt(id)) || id <= 0)
+    return response.status(400).json({ error: 'Id inválido' })
+
+  const client = await searchClient(id)
+  if (!client)
+    return response.status(404).json({ error: 'Cliente não encontrado' })
   return response.json(client)
 })
 
