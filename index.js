@@ -1,8 +1,10 @@
 import express, { response } from 'express'
 import bodyParser from 'body-parser'
 import { searchClient, createClient } from './models/dbFunctions.js'
+import helmet from 'helmet'
 
 const app = express()
+app.use(helmet())
 
 app.use(bodyParser.json({ limit: '1mb' }))
 app.use(

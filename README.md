@@ -8,6 +8,7 @@ Este repositório fornece um exemplo simples de uma API construída com Express 
 * **Body Parser:** Middleware para tratar o corpo das requisições HTTP
 * **MySQL2:** Driver de banco de dados MySQL para Node.js
 * **Dotenv:** Biblioteca para lidar com variáveis de ambiente
+* **Helmet:** Proteger aplicativos Express, definindo vários cabeçalhos HTTP
 
 Para testar a API, basta clonar o repositório e executar o comando ```npm run start``` no terminal. A API estará disponível em http://localhost:3000.
 
