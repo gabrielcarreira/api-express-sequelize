@@ -1,9 +1,15 @@
 import express, { response } from 'express'
 import bodyParser from 'body-parser'
-import { searchClient, createClient, searchClientsByName } from './models/dbFunctions.js'
+import {
+  searchClient,
+  createClient,
+  searchClientsByName,
+  getAllClients
+} from './models/dbFunctions.js'
 import helmet from 'helmet'
 import cors from 'cors'
 import joi from 'joi'
+import queryString from 'query-string'
 
 const app = express()
 app.use(helmet())
@@ -42,6 +48,18 @@ app.get('/client/name/:first_name', async (request, response) => {
   if (clients.length === 0)
     return response.status(404).json({ error: 'Nenhum cliente encontrado' })
   return response.json(clients)
+})
+
+app.get('/clients', async (request, response) => {
+  const page = request.query.page ? parseInt(request.query.page) : 1
+  const limit = request.query.limit ? parseInt(request.query.limit) : 10
+
+  const clients = await getAllClients(page, limit)
+  if (clients.length === 0)
+    return response
+      .status(404)
+      .json({ error: 'Nenhum cliente encontrado na página' })
+  return response.json({ page: page, total: clients.length, clients })
 })
 
 app.post('/client', async (request, response) => {

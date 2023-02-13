@@ -1,5 +1,17 @@
 import Client from './client.js'
 
+export async function getAllClients(page, pageSize) {
+  const offset = (page - 1) * pageSize;
+
+  const clients = await Client.findAll({
+    limit: pageSize,
+    offset: offset,
+    order: [["createdAt", "ASC"]],
+  });
+
+  return clients;
+}
+
 export async function searchClient(id) {
   const clients = await Client.findAll({
     where: {
