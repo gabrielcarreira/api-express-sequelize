@@ -4,7 +4,8 @@ import {
   searchClient,
   createClient,
   searchClientsByName,
-  getAllClients
+  getAllClients,
+  updateClient
 } from './models/dbFunctions.js'
 import helmet from 'helmet'
 import cors from 'cors'
@@ -63,12 +64,29 @@ app.get('/clients', async (request, response) => {
 
 app.post('/client', async (request, response) => {
   const result = clientSchema.validate(request.body)
-  if (result.error) {
+  if (result.error)
     return response.status(400).json({ error: result.error.message })
-  }
 
   const { first_name, last_name, email } = request.body
   const client = await createClient(first_name, last_name, email)
+  return response.json(client)
+})
+
+app.put('/client/:id', async (request, response) => {
+  const result = clientSchema.validate(request.body)
+  if (result.error)
+    return response.status(400).json({ error: result.error.message })
+
+  const { first_name, last_name, email } = request.body
+  const client = await updateClient(
+    request.params.id,
+    first_name,
+    last_name,
+    email
+  )
+  console.log(client)
+  if (!client) return response.status(404).json({ error: 'Client not found' })
+
   return response.json(client)
 })
 
