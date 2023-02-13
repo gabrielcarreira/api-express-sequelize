@@ -73,19 +73,21 @@ app.post('/client', async (request, response) => {
 })
 
 app.put('/client/:id', async (request, response) => {
+  const id = request.params.id
+
+  if (!Number.isInteger(parseInt(id)) || id <= 0)
+    return response.status(400).json({ error: 'Id inválido' })
+
+  const clientCheck = await searchClient(id)
+  if (!clientCheck)
+    return response.status(404).json({ error: 'Cliente não encontrado' })
+
   const result = clientSchema.validate(request.body)
   if (result.error)
     return response.status(400).json({ error: result.error.message })
 
   const { first_name, last_name, email } = request.body
-  const client = await updateClient(
-    request.params.id,
-    first_name,
-    last_name,
-    email
-  )
-  console.log(client)
-  if (!client) return response.status(404).json({ error: 'Client not found' })
+  const client = await updateClient(id, first_name, last_name, email)
 
   return response.json(client)
 })
