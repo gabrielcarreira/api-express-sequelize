@@ -9,7 +9,6 @@ import {
 import helmet from 'helmet'
 import cors from 'cors'
 import joi from 'joi'
-import queryString from 'query-string'
 
 const app = express()
 app.use(helmet())
